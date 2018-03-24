@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: 45068f6356a228948a2e54ffec04db1f
+timeCreated: 1511473822
+licenseType: Free
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: DEADCRT
+  fontNames:
+  - DEADCRT
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
