@@ -1,69 +1,65 @@
-﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
+using System.Collections;
 
 
 public class Speed_Up : MonoBehaviour
 {
-    /*************************************************************************************************
-    *** Variables
-    *************************************************************************************************/
-    private Transform text;
-    private Icon_Spawn iconSpawn;
-    private Animation Anim;
-    private AnimationState ThirdAnimationState;
-    private bool animsPlayed;
-    public float ThirdAnimState;
-    public float DisableDelay = 3f;
+     /*************************************************************************************************
+     *** Variables
+     *************************************************************************************************/
+     [SerializeField] float ThirdAnimState;
+     [SerializeField] float DisableDelay = 3f;
+
+     Icon_Spawn iconSpawn;
+     Animation Anim;
+     AnimationState ThirdAnimationState;
+     bool animsPlayed;
 
 
-    /*************************************************************************************************
-    *** Start
-    *************************************************************************************************/
-    void OnEnable ()
-    {
-	   text = gameObject.transform.GetChild(0);
-	   iconSpawn = FindObjectOfType<Icon_Spawn>();
-	   iconSpawn.enabled = false;
+     /*************************************************************************************************
+     *** Start
+     *************************************************************************************************/
+     void OnEnable()
+     {
+          //Get references
+          iconSpawn = FindObjectOfType<Icon_Spawn>();
+          Anim = gameObject.GetComponent<Animation>();
 
-	   animsPlayed = false;
-	   Anim = gameObject.GetComponent<Animation>();
-	   Anim.Rewind();
+          //Set flags
+          iconSpawn.enabled = false;
+          animsPlayed = false;
 
-    }//void Start
-    
-    
-	/*************************************************************************************************
-    *** Update
-    *************************************************************************************************/
-    void Update ()
-    {
-	   if (FindObjectOfType<Icon_Controller>() == null)
-	   {
-		  if (animsPlayed == false)
-		  {
-			 Anim.PlayQueued("SpeedUp_Background_FadeIn");
-			 Anim.PlayQueued("SpeedUp_Background_Text");
-			 Anim.PlayQueued("SpeedUp_Background_FadeOut");
+          Anim.Rewind();
 
-			 StartCoroutine(WaitAndDisable(DisableDelay));
-			 animsPlayed = true;
-
-		  }//if
-
-	   }//if
-
-    }//void Update
+     }
 
 
-    private IEnumerator WaitAndDisable(float HowLong)
-    {
-	   yield return new WaitForSeconds(HowLong);
-	   iconSpawn.enabled = true;
-	   gameObject.SetActive(false);
+     /*************************************************************************************************
+     *** Update
+     *************************************************************************************************/
+     void Update()
+     {
+          if (FindObjectOfType<Icon_Controller>() == null && animsPlayed == false)
+          {
+               Anim.PlayQueued("SpeedUp_Background_FadeIn");
+               Anim.PlayQueued("SpeedUp_Background_Text");
+               Anim.PlayQueued("SpeedUp_Background_FadeOut");
 
-    }//WaitAndDisable
+               StartCoroutine(WaitAndDisable(DisableDelay));
+               animsPlayed = true;
+
+          }
+
+     }
 
 
-}//public class Speed_Up
+     private IEnumerator WaitAndDisable(float HowLong)
+     {
+          yield return new WaitForSeconds(HowLong);
+          iconSpawn.enabled = true;
+          gameObject.SetActive(false);
+
+     }
+
+
+}

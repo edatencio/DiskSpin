@@ -1,67 +1,66 @@
-﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 
 public class Bullets_Controller : MonoBehaviour
 {
-    /*************************************************************************************************
-    *** Variables
-    *************************************************************************************************/
-    public float BulletSpeed;
-    private Vector3 DiskPosition;
-    private GameObject CurrentTarget;
-    private LayerMask TargetsLayer;
-    public string TargetsLayerName = "Targets";
+     /*************************************************************************************************
+     *** Variables
+     *************************************************************************************************/
+     [SerializeField] float bulletSpeed;
+     [SerializeField] LayerMask targetsLayer;
+
+     Vector3 diskPosition;
+     GameObject currentTarget;
 
 
-    /*************************************************************************************************
-    *** Start
-    *************************************************************************************************/
-    void Start ()
-    {
-	   DiskPosition = FindObjectOfType<Disk_Controller>().transform.position;
-	   TargetsLayer = LayerMask.NameToLayer(TargetsLayerName);
-	   CurrentTarget = FindObjectOfType<Pointer_PointingAt>().CurrentTarget;
-    
-    }//void Start
-    
-    
-    /*************************************************************************************************
-    *** Update
-    *************************************************************************************************/
-    void Update ()
-    {
-	   gameObject.transform.position = Vector3.MoveTowards(gameObject.transform.position, DiskPosition, BulletSpeed * Time.deltaTime);
+     /*************************************************************************************************
+     *** Start
+     *************************************************************************************************/
+     void Start()
+     {
+          //Get references
+          diskPosition = FindObjectOfType<Disk_Controller>().transform.position;
+          currentTarget = FindObjectOfType<Pointer_PointingAt>().CurrentTarget;
 
-	   if (gameObject.transform.position == DiskPosition)
-	   {
-		  Destroy(gameObject);
-
-	   }//else if
+     }
 
 
-    }//void Update
+     /*************************************************************************************************
+     *** Update
+     *************************************************************************************************/
+     void Update()
+     {
+          transform.position = Vector3.MoveTowards(transform.position, diskPosition, bulletSpeed * Time.deltaTime);
+
+          if (transform.position == diskPosition)
+          {
+               Destroy(gameObject);
+
+          }
+
+     }
 
 
-    /*************************************************************************************************
-    *** OnTriggerEnter2D
-    *************************************************************************************************/
-    void OnTriggerEnter2D (Collider2D col)
-    {    
-	   if (col.tag == gameObject.tag && col.GetComponent<Icon_Controller>().CurrentTarget == CurrentTarget)
-	   {
-		  Destroy(col.gameObject);
-		  Destroy(gameObject);
+     /*************************************************************************************************
+     *** OnTriggerEnter2D
+     *************************************************************************************************/
+     void OnTriggerEnter2D(Collider2D other)
+     {
+          GameObject otherTarget = other.GetComponent<Icon_Controller>().CurrentTarget;
 
-	   } else if (col.GetComponent<Icon_Controller>().CurrentTarget == CurrentTarget)
-	   {
-		  Destroy(gameObject);
+          if (other.tag == tag && otherTarget == currentTarget)
+          {
+               Destroy(other.gameObject);
+               Destroy(gameObject);
 
-	   }//if else
+          }
+          else if (otherTarget == currentTarget)
+          {
+               Destroy(gameObject);
 
-    }//OnTriggerEnter2D
+          }
+
+     }
 
 
-}//public class Bullets_Controller
+}
