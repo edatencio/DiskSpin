@@ -1,104 +1,81 @@
-﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-
 
 public class Touch_Controls : MonoBehaviour
 {
-    /*************************************************************************************************
-    *** Variables
-    *************************************************************************************************/
-    public GameObject TouchControls;
-    private Pause_Menu pauseMenu;
-    private Disk_Controller Disk;
+     /*************************************************************************************************
+     *** Variables
+     *************************************************************************************************/
+     public GameObject TouchControls;
+     private Pause_Menu pauseMenu;
+     private Disk_Controller Disk;
 
-    private bool RotateRight;
-    private bool RotateLeft;
+     private bool RotateRight;
+     private bool RotateLeft;
 
+     /*************************************************************************************************
+     *** Start
+     *************************************************************************************************/
+     private void Start()
+     {
+          Disk = FindObjectOfType<Disk_Controller>();
+          pauseMenu = FindObjectOfType<Pause_Menu>();
 
-    /*************************************************************************************************
-    *** Start
-    *************************************************************************************************/
-    void Start ()
-    {
-	   Disk = FindObjectOfType<Disk_Controller>();
-	   pauseMenu = FindObjectOfType<Pause_Menu>();
+#if UNITY_ANDROID
+          TouchControls.SetActive(true);
+#endif
 
-	   #if UNITY_ANDROID
-			 TouchControls.SetActive(true);  
-	   #endif
+#if UNITY_STANDALONE || UNITY_WEBGL
+          TouchControls.SetActive(false);
+#endif
+     }
 
-	   #if UNITY_STANDALONE || UNITY_WEBGL
-			 TouchControls.SetActive(false);
-	   #endif
+     /*************************************************************************************************
+     *** Update
+     *************************************************************************************************/
+     private void Update()
+     {
+          if (RotateRight)
+               Disk.RotateRight();
 
-    }//void Start
-    
+          if (RotateLeft)
+               Disk.RotateLeft();
+     }
 
-    /*************************************************************************************************
-    *** Update
-    *************************************************************************************************/
-    void Update ()
-    {
-	   if (RotateRight)
-		  Disk.RotateRight();
+     /*************************************************************************************************
+     *** Buttons Functions
+     *************************************************************************************************/
+     public void Arrow_Right_Down()
+     {
+          RotateRight = true;
+     }
 
-	   if (RotateLeft)
-		  Disk.RotateLeft();
+     public void Arrow_Right_Up()
+     {
+          RotateRight = false;
+     }
 
-    }//void Update
+     public void Arrow_Left_Down()
+     {
+          RotateLeft = true;
+     }
 
+     public void Arrow_Left_Up()
+     {
+          RotateLeft = false;
+     }
 
-    /*************************************************************************************************
-    *** Buttons Functions
-    *************************************************************************************************/
-    public void Arrow_Right_Down ()
-    {
-	   RotateRight = true;
+     public void Fire_1()
+     {
+          Disk.Fire_1();
+     }
 
-    }//public void Arrow_Right_Down
+     public void Fire_2()
+     {
+          Disk.Fire_2();
+     }
 
-
-    public void Arrow_Right_Up()
-    {
-	   RotateRight = false;
-
-    }//public void Arrow_Right_Up
-
-
-    public void Arrow_Left_Down ()
-    {
-	   RotateLeft = true;
-
-    }//public void Arrow_Left_Down
-
-
-    public void Arrow_Left_Up()
-    {
-	   RotateLeft = false;
-
-    }//public void Arrow_Left_Up
-
-
-    public void Fire_1 ()
-    {
-	   Disk.Fire_1();
-
-    }//public void Fire_1_Down
-
-
-    public void Fire_2 ()
-    {
-	   Disk.Fire_2();
-
-    }//public void Fire_2_Down
-
-
-    public void Pause ()
-    {
-	   pauseMenu.isPaused = !pauseMenu.isPaused;
-
-    }//public void Pause
-
-
-}//public class Touch_Controls
+     public void Pause()
+     {
+          pauseMenu.isPaused = !pauseMenu.isPaused;
+     }
+}

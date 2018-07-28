@@ -2,47 +2,36 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-
 public class Pause_Menu : MonoBehaviour
 {
      /*************************************************************************************************
      *** Variables
      *************************************************************************************************/
-     [SerializeField] SceneAsset mainMenu;
-     [SerializeField] GameObject pauseMenu;
-
+     [SerializeField] private SceneAsset mainMenu;
+     [SerializeField] private GameObject pauseMenu;
 
      /*************************************************************************************************
      *** Start
      *************************************************************************************************/
-     void Start()
+     private void Start()
      {
           isPaused = false;
           pauseMenu.SetActive(false);
-
-     }//void Start
-
+     }
 
      /*************************************************************************************************
      *** Update
      *************************************************************************************************/
-     void Update()
+     private void Update()
      {
           if (Input.GetButtonDown(Constants.Submit))
                Pause_Resume_Game();
-
-     }//void Update
-
+     }
 
      /*************************************************************************************************
      *** Properties
      *************************************************************************************************/
-     public bool isPaused
-     {
-          get; set;
-
-     }//public bool IsPaused
-
+     public bool isPaused { get; set; }
 
      /*************************************************************************************************
      *** Methods
@@ -52,18 +41,15 @@ public class Pause_Menu : MonoBehaviour
           isPaused = !isPaused;
           pauseMenu.SetActive(isPaused);
 
-          if (isPaused) Time.timeScale = 0f;
-          else if (!isPaused) Time.timeScale = 1f;
-
-     }//public void Pause_Game
-
+          if (isPaused)
+               Time.timeScale = 0f;
+          else if (!isPaused)
+               Time.timeScale = 1f;
+     }
 
      public void Quit_Game()
      {
           Time.timeScale = 1f;
           SceneManager.LoadScene(mainMenu.name);
-
-     }//public void Quit_Game
-
-
-}//public class Pause_Menu
+     }
+}

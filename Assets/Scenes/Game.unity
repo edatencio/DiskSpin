@@ -44,7 +44,7 @@ RenderSettings:
 LightmapSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 11
-  m_GIWorkflowMode: 1
+  m_GIWorkflowMode: 0
   m_GISettings:
     serializedVersion: 2
     m_BounceScale: 1
@@ -1228,7 +1228,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 2, y: 2}
+  m_Size: {x: 4, y: 4}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -2769,7 +2769,7 @@ MonoBehaviour:
   Health: 0
   MaxHealth: 10
   HealthSlider: {fileID: 459358711}
-  GameOverScene: Game Over
+  gameOver: {fileID: 0}
 --- !u!114 &2031268259
 MonoBehaviour:
   m_ObjectHideFlags: 0

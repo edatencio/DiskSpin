@@ -1,68 +1,51 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-
+using UnityEngine.SceneManagement;
 
 public class Health_Manager : MonoBehaviour
 {
-    /*************************************************************************************************
-    *** Variables
-    *************************************************************************************************/
-    public int Health;
-    public int MaxHealth = 10;
-    public Slider HealthSlider;
-    public string GameOverScene = "Game Over";
+     /*************************************************************************************************
+     *** Variables
+     *************************************************************************************************/
+     public int Health;
+     public int MaxHealth = 10;
+     [SerializeField] private Slider HealthSlider;
+     [SerializeField] private SceneAsset gameOver;
 
-    /*************************************************************************************************
-    *** Start
-    *************************************************************************************************/
-    void Start ()
-    {
-	   Health = MaxHealth;
-	   HealthSlider.maxValue = MaxHealth;
-    
-    }//void Start
-    
-    
-	/*************************************************************************************************
+     /*************************************************************************************************
+     *** Start
+     *************************************************************************************************/
+     private void Start()
+     {
+          Health = MaxHealth;
+          HealthSlider.maxValue = MaxHealth;
+     }
+
+     /*************************************************************************************************
     *** Update
     *************************************************************************************************/
-    void Update ()
-    {
-	   HealthSlider.value = Health;
-    
-    }//void Update
+     private void Update()
+     {
+          HealthSlider.value = Health;
+     }
 
+     /*************************************************************************************************
+     *** Add and Take Health
+     *************************************************************************************************/
+     public void AddHealth(int HowMuch)
+     {
+          Health += HowMuch;
 
-    /*************************************************************************************************
-    *** Add and Take Health
-    *************************************************************************************************/
-    public void AddHealth (int HowMuch)
-    {
-	   Health += HowMuch;
+          if (Health > MaxHealth)
+               Health = MaxHealth;
+     }
 
-	   if (Health > MaxHealth)
-	   {
-		  Health = MaxHealth;
+     public void TakeHealth(int HowMuch)
+     {
+          Health -= HowMuch;
 
-	   }//if
-
-    }//AddHealth
-
-
-    public void TakeHealth (int HowMuch)
-    {
-	   Health -= HowMuch;
-
-	   if (Health <= 0)
-	   {
-		  SceneManager.LoadScene(GameOverScene);
-
-	   }//if
-
-    }//TakeHealth
-
-
-}//public class Health_Manager
+          if (Health <= 0)
+               SceneManager.LoadScene(gameOver.name);
+     }
+}

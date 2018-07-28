@@ -1,25 +1,23 @@
 using UnityEngine;
 using System.Collections;
 
-
 public class Speed_Up : MonoBehaviour
 {
      /*************************************************************************************************
      *** Variables
      *************************************************************************************************/
-     [SerializeField] float ThirdAnimState;
-     [SerializeField] float DisableDelay = 3f;
+     [SerializeField] private float ThirdAnimState;
+     [SerializeField] private float DisableDelay = 3f;
 
-     Icon_Spawn iconSpawn;
-     Animation Anim;
-     AnimationState ThirdAnimationState;
-     bool animsPlayed;
-
+     private Icon_Spawn iconSpawn;
+     private Animation Anim;
+     private AnimationState ThirdAnimationState;
+     private bool animsPlayed;
 
      /*************************************************************************************************
      *** Start
      *************************************************************************************************/
-     void OnEnable()
+     private void OnEnable()
      {
           //Get references
           iconSpawn = FindObjectOfType<Icon_Spawn>();
@@ -30,14 +28,12 @@ public class Speed_Up : MonoBehaviour
           animsPlayed = false;
 
           Anim.Rewind();
-
      }
-
 
      /*************************************************************************************************
      *** Update
      *************************************************************************************************/
-     void Update()
+     private void Update()
      {
           if (FindObjectOfType<Icon_Controller>() == null && animsPlayed == false)
           {
@@ -47,19 +43,13 @@ public class Speed_Up : MonoBehaviour
 
                StartCoroutine(WaitAndDisable(DisableDelay));
                animsPlayed = true;
-
           }
-
      }
-
 
      private IEnumerator WaitAndDisable(float HowLong)
      {
           yield return new WaitForSeconds(HowLong);
           iconSpawn.enabled = true;
           gameObject.SetActive(false);
-
      }
-
-
 }

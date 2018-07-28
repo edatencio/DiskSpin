@@ -1,11 +1,12 @@
 fileFormatVersion: 2
 guid: 34c80fe359726d742b33b0039b05b215
-timeCreated: 1510622245
-licenseType: Free
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - game: {fileID: 102900000, guid: 5a348d57fc90d1e4aadc274c039c776f, type: 3}
+  - mainMenu: {fileID: 102900000, guid: a509a9c5e0d7b5c41b08e94183980629, type: 3}
+  - ScoreText: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
