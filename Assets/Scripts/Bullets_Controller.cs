@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Bullets_Controller : MonoBehaviour
+public class Bullets_Controller : MonoBehaviour, IObjectPooled
 {
      /*************************************************************************************************
      *** Variables
@@ -29,9 +29,7 @@ public class Bullets_Controller : MonoBehaviour
           transform.position = Vector3.MoveTowards(transform.position, diskPosition, bulletSpeed * Time.deltaTime);
 
           if (transform.position == diskPosition)
-          {
-               Destroy(gameObject);
-          }
+               Pool.Vanish(gameObject);
      }
 
      /*************************************************************************************************
@@ -39,16 +37,21 @@ public class Bullets_Controller : MonoBehaviour
      *************************************************************************************************/
      private void OnTriggerEnter2D(Collider2D other)
      {
-          GameObject otherTarget = other.GetComponent<Icon_Controller>().CurrentTarget;
+          GameObject otherTarget = other.GetComponent<Icon_Controller>().currentTarget;
 
           if (other.tag == tag && otherTarget == currentTarget)
           {
-               Destroy(other.gameObject);
-               Destroy(gameObject);
+               other.gameObject.GetComponent<IObjectPooled>().Pool.Vanish(other.gameObject);
+               Pool.Vanish(gameObject);
           }
           else if (otherTarget == currentTarget)
           {
-               Destroy(gameObject);
+               Pool.Vanish(gameObject);
           }
      }
+
+     /*************************************************************************************************
+     *** Properties
+     *************************************************************************************************/
+     public ObjectPool Pool { get; set; }
 }

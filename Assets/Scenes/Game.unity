@@ -1165,11 +1165,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39c1b30f5feb99744a78ae44a243777b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ShootWindow: 10
-  Pointer: {fileID: 428441926}
-  Bullets:
-  - {fileID: 1393282480985194, guid: 6b7a519e095d5c54fa2736f84596026d, type: 2}
-  - {fileID: 1279338793866152, guid: e8ee1622423b8b143a56663ebde2b2ad, type: 2}
+  shootWindow: 10
+  pointer: {fileID: 428441926}
+  bullets:
+  - {fileID: 11400000, guid: 35ec4b01e3763e141919bf18f305ae49, type: 2}
+  - {fileID: 11400000, guid: 1f6db586af4c6d449a2b9de3101b4e21, type: 2}
 --- !u!114 &620743264
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1182,10 +1182,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47a23ac0fd0f7b3459a21f43772cf812, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Icons:
-  - {fileID: 1880529461137136, guid: 143e3134b3f241540a9350ad91667f07, type: 2}
-  - {fileID: 1462147320035218, guid: fef769abb2f621d45823948eacd1e2f6, type: 2}
-  - {fileID: 1880529461137136, guid: 097e98f6b84f90f4ea79abae273ddb6e, type: 2}
+  iconPools:
+  - {fileID: 11400000, guid: a0f09a1e39d15c649928e6811b6cda48, type: 2}
+  - {fileID: 11400000, guid: b7255dfb56911594aafa3ae1a332cd41, type: 2}
+  - {fileID: 11400000, guid: 0d8e94396e959c34f91569331c9f6812, type: 2}
   ShieldsOn: 0
 --- !u!212 &620743265
 SpriteRenderer:
@@ -2769,7 +2769,7 @@ MonoBehaviour:
   Health: 0
   MaxHealth: 10
   HealthSlider: {fileID: 459358711}
-  gameOver: {fileID: 0}
+  gameOver: {fileID: 102900000, guid: eae8a1084ca01e242a3c7cf3955a2745, type: 3}
 --- !u!114 &2031268259
 MonoBehaviour:
   m_ObjectHideFlags: 0

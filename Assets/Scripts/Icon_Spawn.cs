@@ -5,7 +5,7 @@ public class Icon_Spawn : MonoBehaviour
      /*************************************************************************************************
      *** Variables
      *************************************************************************************************/
-     public GameObject[] Icons;
+     public ObjectPool[] iconPools;
      private int SelectedIcon;
      private Transform Disk;
      private float Counter;
@@ -53,18 +53,13 @@ public class Icon_Spawn : MonoBehaviour
                     default: //Cross
                          SelectedIcon = 0;
                          break;
-
                }
-
-               GameObject IconClone = Instantiate(Icons[SelectedIcon], Disk.position, Disk.rotation, Disk);
-               IconClone.GetComponent<Icon_Controller>().MoveSpeed = difficultyManager.IconsMoveSpeed;
+               GameObject IconClone = iconPools[SelectedIcon].Spawn(Disk, Disk.position, Disk.rotation);
+               IconClone.GetComponent<Icon_Controller>().moveSpeed = difficultyManager.IconsMoveSpeed;
 
                Counter = difficultyManager.SpawnDelay;
-
           }
 
           Counter -= Time.deltaTime;
-
      }
-
 }

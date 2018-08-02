@@ -5,23 +5,23 @@ public class Disk_Controller : MonoBehaviour
      /*************************************************************************************************
      *** Variables
      *************************************************************************************************/
-     public float ShootWindow = 10;
-     private float F_RotationObjetive;
-     private Quaternion Q_RotationObjetive;
-     private bool IsRotating;
+     public float shootWindow = 10;
+     private float f_RotationObjetive;
+     private Quaternion q_RotationObjetive;
+     private bool isRotating;
      private Difficulty_Manager difficultyManager;
 
-     public GameObject Pointer;
-     public GameObject[] Bullets = new GameObject[2];
+     public GameObject pointer;
+     public ObjectPool[] bullets = new ObjectPool[2];
 
      /*************************************************************************************************
      *** Start
      *************************************************************************************************/
      private void Start()
      {
-          IsRotating = false;
+          isRotating = false;
           difficultyManager = FindObjectOfType<Difficulty_Manager>();
-          Q_RotationObjetive = gameObject.transform.rotation;
+          q_RotationObjetive = gameObject.transform.rotation;
      }
 
      /*************************************************************************************************
@@ -49,10 +49,10 @@ public class Disk_Controller : MonoBehaviour
 #endif
 
           //Rotate Disk
-          if (gameObject.transform.rotation != Q_RotationObjetive)
-               gameObject.transform.rotation = Quaternion.RotateTowards(gameObject.transform.rotation, Q_RotationObjetive, difficultyManager.DiskRotationSpeed * Time.deltaTime);
+          if (gameObject.transform.rotation != q_RotationObjetive)
+               gameObject.transform.rotation = Quaternion.RotateTowards(gameObject.transform.rotation, q_RotationObjetive, difficultyManager.DiskRotationSpeed * Time.deltaTime);
           else
-               IsRotating = false;
+               isRotating = false;
      }
 
      /*************************************************************************************************
@@ -60,21 +60,21 @@ public class Disk_Controller : MonoBehaviour
      *************************************************************************************************/
      public void RotateRight()
      {
-          if (IsRotating == false)
+          if (isRotating == false)
           {
-               IsRotating = true;
-               F_RotationObjetive += 45f;
-               Q_RotationObjetive = Quaternion.Euler(gameObject.transform.rotation.x, gameObject.transform.rotation.y, F_RotationObjetive);
+               isRotating = true;
+               f_RotationObjetive += 45f;
+               q_RotationObjetive = Quaternion.Euler(gameObject.transform.rotation.x, gameObject.transform.rotation.y, f_RotationObjetive);
           }
      }
 
      public void RotateLeft()
      {
-          if (IsRotating == false)
+          if (isRotating == false)
           {
-               IsRotating = true;
-               F_RotationObjetive -= 45f;
-               Q_RotationObjetive = Quaternion.Euler(gameObject.transform.rotation.x, gameObject.transform.rotation.y, F_RotationObjetive);
+               isRotating = true;
+               f_RotationObjetive -= 45f;
+               q_RotationObjetive = Quaternion.Euler(gameObject.transform.rotation.x, gameObject.transform.rotation.y, f_RotationObjetive);
           }
      }
 
@@ -83,13 +83,13 @@ public class Disk_Controller : MonoBehaviour
      *************************************************************************************************/
      public void Fire_1()
      {
-          if (Quaternion.Angle(gameObject.transform.rotation, Q_RotationObjetive) <= ShootWindow)
-               Instantiate(Bullets[0], Pointer.transform.position, Pointer.transform.rotation, gameObject.transform);
+          if (Quaternion.Angle(gameObject.transform.rotation, q_RotationObjetive) <= shootWindow)
+               bullets[0].Spawn(transform, pointer.transform.position, pointer.transform.rotation);
      }
 
      public void Fire_2()
      {
-          if (Quaternion.Angle(gameObject.transform.rotation, Q_RotationObjetive) <= ShootWindow)
-               Instantiate(Bullets[1], Pointer.transform.position, Pointer.transform.rotation, gameObject.transform);
+          if (Quaternion.Angle(gameObject.transform.rotation, q_RotationObjetive) <= shootWindow)
+               bullets[1].Spawn(transform, pointer.transform.position, pointer.transform.rotation);
      }
 }

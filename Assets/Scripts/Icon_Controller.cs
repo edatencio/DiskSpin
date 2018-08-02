@@ -1,39 +1,41 @@
 using UnityEngine;
 
-public class Icon_Controller : MonoBehaviour
+public class Icon_Controller : MonoBehaviour, IObjectPooled
 {
      /*************************************************************************************************
      *** Variables
      *************************************************************************************************/
-     public float MoveSpeed;
-     public int HealthToTake = 1;
-     public int PointsToAdd = 10;
-     public int PointsToTake = 5;
-     public string PlusIconName = "Plus";
-     public string CrossIconName = "Cross";
-     public GameObject CurrentTarget;
-     public int TargetSelection;
-     public string[] Targets;
-     public bool DebugTarget = false;
-     public int DebugTargetSelection;
-     private Score_Manager Score;
-     private Health_Manager HealthManager;
+     public float moveSpeed;
+     public int healthToTake = 1;
+     public int pointsToAdd = 10;
+     public int pointsToTake = 5;
+     public string plusIconName = "Plus";
+     public string crossIconName = "Cross";
+     public GameObject currentTarget;
+     public int targetSelection;
+     public string[] targets;
+     public bool debugTarget = false;
+     public int debugTargetSelection;
+     private Score_Manager score;
+     private Health_Manager healthManager;
 
      /*************************************************************************************************
      *** Start
      *************************************************************************************************/
      private void Start()
      {
-          TargetSelection = Mathf.RoundToInt(Random.Range(0, 8));
+          targetSelection = Random.Range(0, targets.Length);
 
-          if (DebugTarget)
-               TargetSelection = DebugTargetSelection;
+          Debug.Log(targetSelection.ToString());
 
-          CurrentTarget = GameObject.Find(Targets[TargetSelection]);
-          transform.rotation = CurrentTarget.transform.rotation;
+          if (debugTarget)
+               targetSelection = debugTargetSelection;
 
-          Score = FindObjectOfType<Score_Manager>();
-          HealthManager = FindObjectOfType<Health_Manager>();
+          currentTarget = GameObject.Find(targets[targetSelection]);
+          transform.rotation = currentTarget.transform.rotation;
+
+          score = FindObjectOfType<Score_Manager>();
+          healthManager = FindObjectOfType<Health_Manager>();
      }
 
      /*************************************************************************************************
@@ -41,10 +43,10 @@ public class Icon_Controller : MonoBehaviour
      *************************************************************************************************/
      private void Update()
      {
-          transform.position = Vector3.MoveTowards(gameObject.transform.position, CurrentTarget.transform.position, MoveSpeed * Time.deltaTime);
+          transform.position = Vector3.MoveTowards(gameObject.transform.position, currentTarget.transform.position, moveSpeed * Time.deltaTime);
 
-          if (gameObject.transform.position == CurrentTarget.transform.position)
-               Destroy(gameObject);
+          if (gameObject.transform.position == currentTarget.transform.position)
+               Pool.Vanish(gameObject);
      }
 
      /*************************************************************************************************
@@ -52,13 +54,18 @@ public class Icon_Controller : MonoBehaviour
      *************************************************************************************************/
      private void OnDestroy()
      {
-          if (gameObject.transform.position == CurrentTarget.transform.position && gameObject.tag == CrossIconName)
+          if (gameObject.transform.position == currentTarget.transform.position && gameObject.tag == crossIconName)
           {
-               Score.TakePoints(PointsToTake);
-               HealthManager.TakeHealth(HealthToTake);
+               score.TakePoints(pointsToTake);
+               healthManager.TakeHealth(healthToTake);
           }
 
-          if (gameObject.transform.position != CurrentTarget.transform.position && gameObject.tag == PlusIconName)
-               Score.AddPoints(PointsToAdd);
+          if (gameObject.transform.position != currentTarget.transform.position && gameObject.tag == plusIconName)
+               score.AddPoints(pointsToAdd);
      }
+
+     /*************************************************************************************************
+     *** Properties
+     *************************************************************************************************/
+     public ObjectPool Pool { get; set; }
 }
